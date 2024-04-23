@@ -10,69 +10,31 @@ export default {
   mounted() {
     if (this.lsUser) {
       try {
-        this.$store.commit("setUser", this.lsUser);
+        this.getOne("users/" + this.lsUser.id).then((user) => {
+          this.$store.commit("setUser", user);
+        });
       } catch (e) {
         console.log(e);
         localStorage.removeItem("chat--user");
         this.$router.push("/login");
-      } finally {
       }
     } else {
       this.$router.push("/login");
     }
   },
   beforeUnmount() {
-    this.lsUser = this.user;
+    this.lsUser = this.$store.state.user;
+    this.updateByKey("users/", this.userID, this.$store.state.user);
     window.removeEventListener("resize");
   },
 };
 </script>
 
 <template lang='pug'>
-TheNavbar.w-full.mb-4(v-if="user")
-router-view
+TheNavbar.w-full.mb-4(v-if="userID")
+router-view.h-full
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  padding: 20px;
-  height: calc(var(--vh, 1vh) * 100);
-  @apply flex flex-col bg-m1 text-m4;
-}
-.fc {
-  @apply flex items-center justify-center;
-}
-.fcc {
-  @apply flex flex-col items-center;
-}
-.fa {
-  @apply flex justify-around;
-}
-.shine {
-  @apply rounded shadow-md hover:scale-110 transition duration-300;
-}
-.button-ok {
-  @apply bg-m2 text-m4 w-full rounded border font-bold shadow-green-600;
-}
-.loader {
-  @apply w-8 h-8 animate-spin;
-}
-.input {
-  @apply pl-2 text-m1 shadow-red-600 mr-2 rounded;
-}
-use {
-  all: inherit;
-}
-ul::-webkit-scrollbar {
-  width: 10px;
-}
-ul::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-ul::-webkit-scrollbar-thumb {
-  @apply bg-m4 rounded-xl;
-}
+/* import main from "../assets/main.css" */
 </style>

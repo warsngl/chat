@@ -10,6 +10,7 @@ const store = createStore({
         onlineAt: '',
         rooms: [],
         messages: [],
+        room:""
       },
     };
   },
@@ -23,6 +24,9 @@ const store = createStore({
     pushUserProps(state, { prop, val }) {
       state.user[prop].push(val);
     },
+    countMessage(state){
+      state.user.count=state.user.count+1
+    }
   },
 });
 export default store;

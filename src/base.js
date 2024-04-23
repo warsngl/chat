@@ -5,25 +5,27 @@ import {
   ref,
   get,
   remove,
+  set,
 } from 'firebase/database';
 export default {
   data: () => ({}),
   computed: {
-    user() {
+    userName() {
       return this.$store.state.user?.name;
     },
-    fullUser() {
-      return this.$store.state.user;
+    userID() {
+      return this.$store.state.user.id;
     },
-    room() {
+    roomID() {
       return this.$route.params?.roomID;
     },
-    lsUser:{
-      get(){
+    lsUser: {
+      get() {
         return JSON.parse(localStorage.getItem('chat--user')) || null
       },
-      set(user){
+      set(user) {
         localStorage.setItem("chat--user", JSON.stringify(user));
+        //this.$store.state.user
       }
     },
   },
@@ -45,5 +47,8 @@ export default {
     removeOne(route) {
       return remove(ref(db, route));
     },
+    setOne(route, key, val) {
+      return set(ref(db, route + key), val)
+    }
   },
 };

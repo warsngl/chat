@@ -3,10 +3,10 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 
 import store from './store';
 import App from './App.vue';
-import Lobby from './components/Lobby.vue';
-import Login from './components/Login.vue';
-import Profile from './components/Profile.vue';
-import Room from './components/Room.vue';
+import Lobby from './views/Lobby.vue';
+import Login from './views/Login.vue';
+import Profile from './views/Profile.vue';
+import Room from './views/Room.vue';
 
 import './assets/index.css';
 import base from './base';

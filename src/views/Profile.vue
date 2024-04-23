@@ -10,7 +10,7 @@
       p Messages
     .w-50
       p {{ target.name }}
-      p {{ onlineAt.day + ' ' + onlineAt.month + ' ' + onlineAt.year }}
+      p {{ onlineAt.day + " " + onlineAt.month + " " + onlineAt.year }}
       p {{ target.count }}
 </template>
 
@@ -20,7 +20,7 @@ export default {
     target: {},
   }),
   computed: {
-    profile() {
+    targetUserID() {
       return this.$route.params.id;
     },
     onlineAt() {
@@ -51,10 +51,8 @@ export default {
     },
   },
   mounted() {
-    this.getOne("users").then((users) => {
-      let key = Object.keys(users).forEach((u) => {
-        users[u].name == this.profile && (this.target = users[u]);
-      });
+    this.getOne("users/" + this.targetUserID).then((user) => {
+      this.target = user;
     });
   },
 };

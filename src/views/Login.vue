@@ -1,5 +1,5 @@
 <template lang='pug'>
-.flex.justify-center.mt-12
+.flex.justify-center.mt-12.h-8
   .relative
     label.name(for="name") Name
     input#name.input.shine(
@@ -17,13 +17,18 @@ export default {
   }),
   methods: {
     enter() {
-      this.$store.commit("setUserProp", { prop: "name", val: this.name });
-      this.$store.commit("setUserProp", { prop: "onlineAt", val: new Date() });
-      const key = this.getKey("users");
-      this.$store.commit("setUserProp", { prop: "id", val: key });
-      this.$store.commit("setUserProp", { prop: "rooms", val: [] });
-      this.updateByKey("users/", key, this.fullUser);
-      this.lsUser = this.fullUser;
+      const newUserKey = this.getKey("users");
+
+      this.$store.commit("setUser", {
+        id:newUserKey,
+        name: this.name,
+        onlineAt: new Date(),
+        rooms: [],
+        count:0
+      });
+
+      this.updateByKey("users/", newUserKey, this.$store.state.user);
+      this.lsUser = this.$store.state.user;
       this.$router.push("/");
     },
   },
@@ -33,5 +38,8 @@ export default {
 <style scoped>
 .name {
   @apply absolute -top-6 left-2 text-xs;
+}
+#name {
+  @apply h-8;
 }
 </style>
